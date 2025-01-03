@@ -34,7 +34,6 @@ runs:
       uses: actions/checkout@v4
 
     - name: Generate Unique Branch Name
-      if: env.changes == 'true'
       shell: bash
       run: |
         # Generate a branch name based on the ref and timestamp
