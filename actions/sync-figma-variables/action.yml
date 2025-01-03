@@ -44,15 +44,23 @@ runs:
       run: |
         curl -H "x-figmayo-key: ${{ inputs.figmayo-api-key }}" https://app.figmayo.com/api/v2/plugin/variables -o ${{ inputs.file-path }}
 
+    - name: Stage File for Git Diff
+      shell: bash
+      run: |
+        git add ${{ inputs.file-path }}
+
     - name: Check for Changes
       id: git-check
       shell: bash
       run: |
-        if git diff --quiet; then
+        if git diff --cached --quiet; then
           echo "changes=false" >> $GITHUB_ENV
         else
           echo "changes=true" >> $GITHUB_ENV
         fi
+
+        # Debugging Output
+        echo "Changes detected: ${{ env.changes }}"
 
     - name: Commit Changes
       if: env.changes == 'true'
