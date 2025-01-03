@@ -90,7 +90,7 @@ runs:
 
     - name: Authenticate GitHub CLI
       if: env.changes == 'true'
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+      run: echo "${{ inputs.github-token }}" | gh auth login --with-token
 
     - name: Create Pull Request
       if: env.changes == 'true'
