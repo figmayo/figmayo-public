@@ -1,84 +1,53 @@
-# Turborepo starter
+# FigMayo Open Sauce 🍯
 
-This is an official starter Turborepo.
+Our goal at FigMayo is to make sophisticated design system practices as low-friction as possible for smaller, time-pressed teams. As part of this effort, we want to share our internal tools with the community.
 
-## Using this example
+We try to optimize for simple, low-energy solutions to complex problems—but we might not always hit the mark. Hopefully, you can find something of value here.
 
-Run the following command:
+## 🙋‍♂️ What is FigMayo?
 
-```sh
-npx create-turbo@latest
-```
+FigMayo instantly converts any Figma library into a fully functional documentation reference website you can share with your team. All your styles, variables and components are included allowing stakeholders to browse and explore your design work.
 
-## What's inside?
+Give developers the tools they need to inspect components & variables, copy styles and play with your variants and props. Easily add Storybook, Github markdown, code samples and more.
 
-This Turborepo includes the following packages/apps:
+**Sign up for free at [www.figmayo.com](https://www.figmayo.com)**
 
-### Apps and Packages
+## 🛠 Projects in This Monorepo
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 1. **Sync Figma Variables GitHub Action**
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- Automates the process of fetching **Figma variables** from FigMayo and committing updates to your repository.
+- Creates a **Pull Request** if changes are detected, keeping your design tokens in sync.
 
-### Utilities
+### More tools coming soon... 🚧
 
-This Turborepo has some additional tools already setup for you:
+Stay tuned as we continue to expand this repository with more **open-source tools** to make design-to-code integration even easier!
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## 📥 How to Contribute
 
-### Build
+1. **Fork this repo** and create your branch (`git checkout -b feature/new-tool`).
+2. Make your changes and **commit** (`git commit -m 'Add new feature'`).
+3. Push to your branch (`git push origin feature/new-tool`).
+4. Open a **Pull Request**.
 
-To build all apps and packages, run the following command:
+## 📄 License
 
-```
-cd my-turborepo
-pnpm build
-```
+This project is licensed under the [MIT License](LICENSE).
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+## 💬 Join the Community
 
-```
-cd my-turborepo
-pnpm dev
-```
+Got questions or feedback? We’d love to hear from you!
 
-### Remote Caching
+- Visit [FigMayo Help](https://help.figmayo.com) for guides and FAQs.
+- Reach out on [GitHub Discussions](https://github.com/figmayo/discussions).
+- Connect with us on [Slack](https://join.slack.com/t/figmayodesign-mjo8225/shared_invite/zt-2unvmltc6-UPhZTJlv78Eq0E2cRGbbvQ).
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## 🔗 Get Started with FigMayo
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+1. Sign up for a **free account** at [www.figmayo.com](https://www.figmayo.com).
+2. Install the [**FigMayo Plugin**](https://www.figma.com/community/plugin/1426513201495859669) in Figma.
+3. Sync your design variables with FigMayo and integrate them directly into your codebase.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+Building better design ops workflows! 🚀
