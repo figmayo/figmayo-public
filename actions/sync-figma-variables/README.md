@@ -28,7 +28,7 @@ This GitHub Action fetches **Figma variables** from the **FigMayo API** and comm
 
 | Input             | Description                                 | Required |
 | ----------------- | ------------------------------------------- | -------- |
-| `github-token`    | To authenticate the gh cli and raise a PR.  | ✅ Yes   |
+| `github-pat`      | To authenticate the gh cli and raise a PR.  | ✅ Yes   |
 | `figmayo-api-key` | FigMayo API Key for authentication.         | ✅ Yes   |
 | `file-path`       | Path to save the Figma variables JSON file. | ✅ Yes   |
 
@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: your-org/sync-design-tokens@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-pat: ${{ secrets.GH_PAT }}
           figmayo-api-key: ${{ secrets.FIGMAYO_API_KEY }}
           file-path: "src/design-tokens.json"
 ```
