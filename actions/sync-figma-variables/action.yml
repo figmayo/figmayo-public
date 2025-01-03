@@ -94,3 +94,4 @@ runs:
         title: "Update Figma variables"
         body: "This is an automated PR raised by the sync-figma-variables action. It updates the Figma variables from the FigMayo API."
         labels: "figmayo"
+        fetch-depth: 0
