@@ -85,13 +85,16 @@ runs:
         git commit -m "Updated Figma variables from FigMayo API"
         git push origin ${{ env.BRANCH_NAME }}
 
+    - name: Authenticate GitHub CLI
+      if: env.changes == 'true'
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
     - name: Create Pull Request
       if: env.changes == 'true'
-      uses: peter-evans/create-pull-request@v5
-      with:
-        base: ${{ github.ref_name }} # PR into the branch that triggered the workflow
-        branch: ${{ env.BRANCH_NAME }} # Source branch for the PR
-        title: "Update Figma variables"
-        body: "This is an automated PR raised by the sync-figma-variables action. It updates the Figma variables from the FigMayo API."
-        labels: "figmayo"
-        fetch-depth: 0
+      run: |
+        gh pr create \
+          --base ${{ github.ref_name }} \
+          --head  ${{ env.BRANCH_NAME }} \
+          --title "Update Figma variables" \
+          --body  "This is a FigMayo automated PR raised by the sync-figma-variables action. It updates the Figma variables JSON from the FigMayo API." \
+          --label "figmayo"
