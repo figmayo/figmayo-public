@@ -1,7 +1,7 @@
 # FigMayo Open Source Monorepo
 
 Welcome to the **FigMayo Open Source Monorepo**! 🎨  
-This repository is the central hub for all **FigMayo open-source tools**, plugins, and GitHub Actions designed to streamline design-to-code workflows.
+This repository is the central hub for all **FigMayo open-source tools**, plugins, and GitHub Actions designed to streamline design ops workflows.
 
 ## 🚀 About FigMayo
 

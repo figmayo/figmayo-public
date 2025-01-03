@@ -4,6 +4,18 @@ author: "FigMayo"
 branding:
   icon: "zap"
   color: "blue"
+keywords:
+  - figmayo
+  - figma
+  - design-tokens
+  - variables
+  - github-action
+  - design-system
+  - token-sync
+  - automation
+  - figma-integration
+  - pull-request
+  - design-ops
 inputs:
   figmayo-api-key:
     description: "FigMayo API Key"
