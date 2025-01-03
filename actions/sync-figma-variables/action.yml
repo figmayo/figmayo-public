@@ -1,5 +1,5 @@
 name: "Sync Figma Variables from FigMayo"
-description: "Fetchesfigma variables from FigMayo API and creates a PR to update them in your repo."
+description: "Fetches figma variables from FigMayo API and creates a PR to update them in your repo."
 author: "FigMayo"
 branding:
   icon: "zap"
@@ -30,8 +30,19 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout Repo
+    - name: Checkout Base Branch
       uses: actions/checkout@v4
+
+    - name: Create or Switch to Update Branch
+      if: env.changes == 'true'
+      shell: bash
+      run: |
+        # Checkout the base branch
+        git fetch origin ${{ github.ref_name }}
+        git checkout ${{ github.ref_name }}
+
+        # Create or switch to 'update-figma-variables[figmayo]'
+        git checkout -B update-figma-variables[figmayo]
 
     - name: Ensure Target Directory Exists
       shell: bash
@@ -68,7 +79,6 @@ runs:
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git checkout -b update-figma-variables
         git add ${{ inputs.file-path }}
         git commit -m "chore: update Figma variables from FigMayo API"
         git push origin update-figma-variables
@@ -77,7 +87,8 @@ runs:
       if: env.changes == 'true'
       uses: peter-evans/create-pull-request@v5
       with:
-        branch: update-figma-variables
-        title: "chore: update figma variables"
-        body: "This PR updates figma variables from the FigMayo API."
-        labels: "automated pr"
+        base: ${{ github.ref_name }} # PR into the branch that triggered the workflow
+        branch: update-figma-variables[figmayo] # Source branch for the PR
+        title: "chore: update Figma variables"
+        body: "This PR updates Figma variables from the FigMayo API."
+        labels: "figmayo"
