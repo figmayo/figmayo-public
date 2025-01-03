@@ -94,6 +94,7 @@ runs:
 
     - name: Create Pull Request
       if: env.changes == 'true'
+      shell: bash
       run: |
         gh pr create \
           --base ${{ github.ref_name }} \
