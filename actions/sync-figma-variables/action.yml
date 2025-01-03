@@ -33,16 +33,14 @@ runs:
     - name: Checkout Base Branch
       uses: actions/checkout@v4
 
-    - name: Create or Switch to Update Branch
+    - name: Generate Unique Branch Name
       if: env.changes == 'true'
       shell: bash
       run: |
-        # Checkout the base branch
-        git fetch origin ${{ github.ref_name }}
-        git checkout ${{ github.ref_name }}
-
-        # Create or switch to 'update-figma-variables[figmayo]'
-        git checkout -B update-figma-variables[figmayo]
+        # Generate a branch name based on the ref and timestamp
+        BRANCH_NAME="figmayo/sync-figma-variables/${{ github.ref_name }}-$(date +'%Y%m%d%H%M%S' | tr -d '\n')"
+        echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+        echo "Generated branch name: $BRANCH_NAME"
 
     - name: Ensure Target Directory Exists
       shell: bash
@@ -77,18 +75,18 @@ runs:
       if: env.changes == 'true'
       shell: bash
       run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git config --global user.name 'FigMayo Bot'
+        git config --global user.email 'support@figmayo.com'
         git add ${{ inputs.file-path }}
-        git commit -m "chore: update Figma variables from FigMayo API"
-        git push origin update-figma-variables
+        git commit -m "Updated Figma variables from FigMayo API"
+        git push origin ${{ env.BRANCH_NAME }}
 
     - name: Create Pull Request
       if: env.changes == 'true'
       uses: peter-evans/create-pull-request@v5
       with:
         base: ${{ github.ref_name }} # PR into the branch that triggered the workflow
-        branch: update-figma-variables[figmayo] # Source branch for the PR
-        title: "chore: update Figma variables"
-        body: "This PR updates Figma variables from the FigMayo API."
+        branch: ${{ env.BRANCH_NAME }} # Source branch for the PR
+        title: "Update Figma variables"
+        body: "This is an automated PR raised by the sync-figma-variables action. It updates the Figma variables from the FigMayo API."
         labels: "figmayo"
