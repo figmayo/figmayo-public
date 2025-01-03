@@ -48,7 +48,11 @@ runs:
       id: git-check
       shell: bash
       run: |
-        git diff --exit-code || echo "changes=true" >> $GITHUB_ENV
+        if git diff --quiet; then
+          echo "changes=false" >> $GITHUB_ENV
+        else
+          echo "changes=true" >> $GITHUB_ENV
+        fi
 
     - name: Commit Changes
       if: env.changes == 'true'
@@ -58,7 +62,7 @@ runs:
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git checkout -b update-figma-variables
         git add ${{ inputs.file-path }}
-        git commit -m "chore: update figma variables from FigMayo API"
+        git commit -m "chore: update Figma variables from FigMayo API"
         git push origin update-figma-variables
 
     - name: Create Pull Request
@@ -67,5 +71,5 @@ runs:
       with:
         branch: update-figma-variables
         title: "chore: update figma variables"
-        body: "This PR updatesfigma variables from the FigMayo API."
+        body: "This PR updates figma variables from the FigMayo API."
         labels: "automated pr"
