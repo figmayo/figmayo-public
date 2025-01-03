@@ -13,5 +13,6 @@ jobs:
       - name: Test Sync Figma Variables
         uses: ./actions/sync-figma-variables # Local path reference
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           figmayo-api-key: ${{ secrets.FIGMAYO_API_KEY }}
           file-path: "test/design-tokens.json"

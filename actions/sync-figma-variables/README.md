@@ -26,10 +26,11 @@ This GitHub Action fetches **Figma variables** from the **FigMayo API** and comm
 
 ## **Inputs**
 
-| Input             | Description                                 | Required | Default |
-| ----------------- | ------------------------------------------- | -------- | ------- |
-| `figmayo-api-key` | FigMayo API Key for authentication.         | ✅ Yes   |         |
-| `file-path`       | Path to save the Figma variables JSON file. | ✅ Yes   |         |
+| Input             | Description                                 | Required |
+| ----------------- | ------------------------------------------- | -------- |
+| `github-token`    | To authenticate the gh cli and raise a PR.  | ✅ Yes   |
+| `figmayo-api-key` | FigMayo API Key for authentication.         | ✅ Yes   |
+| `file-path`       | Path to save the Figma variables JSON file. | ✅ Yes   |
 
 ---
 
@@ -55,7 +56,8 @@ jobs:
     steps:
       - uses: your-org/sync-design-tokens@v1
         with:
-          api-key: ${{ secrets.FIGMAYO_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          figmayo-api-key: ${{ secrets.FIGMAYO_API_KEY }}
           file-path: "src/design-tokens.json"
 ```
 
@@ -66,7 +68,7 @@ jobs:
 1. Fetches **Figma variables** from the **FigMayo API** using the provided **API key**.
 2. Saves the variables as a JSON file in your repository at the specified path.
 3. Checks if the fetched file has changes compared to the existing one.
-4. If changes are detected, commits the updates and creates a **pull request** automatically.
+4. If changes are detected, commits the updates and creates a **pull request** automatically using the gh CLI.
 
 ---
 

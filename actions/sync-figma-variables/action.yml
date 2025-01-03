@@ -23,6 +23,9 @@ inputs:
   file-path:
     description: "Path to save the figma variables JSON file"
     required: true
+  github-token:
+    description: "GitHub token for authentication"
+    required: true
 outputs:
   pr-url:
     description: "URL of the created pull request"
