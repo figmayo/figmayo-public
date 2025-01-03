@@ -1,0 +1,56 @@
+name: Sync Design Tokens
+
+on:
+  workflow_dispatch: # Manual trigger
+  schedule:
+    - cron: '0 0 * * 1' # Weekly schedule at midnight on Mondays
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-tokens:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Fetch Design Tokens
+        env:
+          FIGMAYO_API_KEY: ${{ secrets.FIGMAYO_API_KEY }}
+          TOKEN_FILE_PATH: ${{ secrets.TOKEN_FILE_PATH }}
+        run: |
+          # Ensure the file path is provided
+          if [ -z "$TOKEN_FILE_PATH" ]; then
+            echo "TOKEN_FILE_PATH secret is missing!"
+            exit 1
+          fi
+
+          # Make GET request to FigMayo API
+          curl -H "x-figmayo-key: $FIGMAYO_API_KEY"                https://app.figmayo.com/api/v2/plugin/variables                -o "$TOKEN_FILE_PATH"
+
+      - name: Check for Changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "changes=true" >> $GITHUB_ENV
+
+      - name: Commit Changes
+        if: env.changes == 'true'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b update-design-tokens
+          git add "$TOKEN_FILE_PATH"
+          git commit -m "chore: update design tokens from Figmayo API"
+          git push origin update-design-tokens
+
+      - name: Create Pull Request
+        if: env.changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: update-design-tokens
+          title: 'chore: update design tokens'
+          body: 'This PR updates design tokens from the Figmayo API.'
+          labels: 'automated pr'

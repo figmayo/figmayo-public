@@ -1,6 +1,5 @@
 {
   "name": "figmayo-public",
-  "private": true,
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
@@ -17,7 +16,6 @@
   },
   "packageManager": "npm@10.1.0",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "workflows/*"
   ]
 }

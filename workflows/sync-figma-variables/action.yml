@@ -1,0 +1,53 @@
+name: "Sync Figma Variables from FigMayo"
+description: "Fetchesfigma variables from FigMayo API and creates a PR to update them in your repo."
+author: "FigMayo"
+branding:
+  icon: "zap"
+  color: "blue"
+inputs:
+  figmayo-api-key:
+    description: "FigMayo API Key"
+    required: true
+  file-path:
+    description: "Path to save the figma variables JSON file"
+    required: true
+outputs:
+  pr-url:
+    description: "URL of the created pull request"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+
+    - name: Fetch Figma Variables
+      shell: bash
+      run: |
+        curl -H "x-figmayo-key: ${{ inputs.figmayo-api-key }}" https://app.figmayo.com/api/v2/plugin/variables -o ${{ inputs.file-path }}
+
+    - name: Check for Changes
+      id: git-check
+      shell: bash
+      run: |
+        git diff --exit-code || echo "changes=true" >> $GITHUB_ENV
+
+    - name: Commit Changes
+      if: env.changes == 'true'
+      shell: bash
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git checkout -b update-figma-variables
+        git add ${{ inputs.file-path }}
+        git commit -m "chore: update figma variables from FigMayo API"
+        git push origin update-figma-variables
+
+    - name: Create Pull Request
+      if: env.changes == 'true'
+      uses: peter-evans/create-pull-request@v5
+      with:
+        branch: update-figma-variables
+        title: "chore: update figma variables"
+        body: "This PR updatesfigma variables from the FigMayo API."
+        labels: "automated pr"
