@@ -101,5 +101,4 @@ runs:
           --base ${{ github.ref_name }} \
           --head  ${{ env.BRANCH_NAME }} \
           --title "Update Figma variables" \
-          --body  "This is a FigMayo automated PR raised by the sync-figma-variables action. It updates the Figma variables JSON from the FigMayo API." \
-          --label "figmayo"
+          --body  "This is a FigMayo automated PR raised by the sync-figma-variables action. It updates the Figma variables JSON from the FigMayo API."
