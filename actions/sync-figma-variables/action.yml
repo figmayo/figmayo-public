@@ -33,6 +33,12 @@ runs:
     - name: Checkout Base Branch
       uses: actions/checkout@v4
 
+    - name: Configure Git
+      shell: bash
+      run: |
+        git config --global user.name 'FigMayo Bot'
+        git config --global user.email 'support@figmayo.com'
+
     - name: Generate Unique Branch Name
       shell: bash
       run: |
@@ -40,6 +46,7 @@ runs:
         BRANCH_NAME="figmayo/sync-figma-variables/${{ github.ref_name }}-$(date +'%Y%m%d%H%M%S' | tr -d '\n')"
         echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
         echo "Generated branch name: $BRANCH_NAME"
+        git checkout -b $BRANCH_NAME
 
     - name: Ensure Target Directory Exists
       shell: bash
@@ -74,8 +81,6 @@ runs:
       if: env.changes == 'true'
       shell: bash
       run: |
-        git config --global user.name 'FigMayo Bot'
-        git config --global user.email 'support@figmayo.com'
         git add ${{ inputs.file-path }}
         git commit -m "Updated Figma variables from FigMayo API"
         git push origin ${{ env.BRANCH_NAME }}
