@@ -1,0 +1,18 @@
+name: Test Sync Figma Variables Action
+
+on:
+  workflow_dispatch: # Allows manual execution
+
+jobs:
+  test-sync-figma-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Test Sync Figma Variables
+        uses: ./actions/sync-figma-variables # Local path reference
+        with:
+          gh-pat: ${{ secrets.GH_PAT }}
+          figmayo-api-key: ${{ secrets.FIGMAYO_API_KEY }}
+          file-path: "test/design-tokens.json"
