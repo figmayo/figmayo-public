@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Allows manual execution
 
 jobs:
-  test-action:
+  test-sync-figma-variables:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -14,4 +14,4 @@ jobs:
         uses: ./actions/sync-figma-variables # Local path reference
         with:
           api-key: ${{ secrets.FIGMAYO_API_KEY }}
-          file-path: "src/design-tokens.json"
+          file-path: "out/design-tokens.json"

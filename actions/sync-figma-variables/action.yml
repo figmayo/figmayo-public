@@ -33,6 +33,12 @@ runs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
+    - name: Ensure Target Directory Exists
+      shell: bash
+      run: |
+        dir=$(dirname "${{ inputs.file-path }}")
+        mkdir -p "$dir" # Create the directory if it doesn't exist
+
     - name: Fetch Figma Variables
       shell: bash
       run: |
